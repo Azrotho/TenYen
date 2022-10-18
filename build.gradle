@@ -1,8 +1,9 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
 }
 
-group 'org.example'
+group 'fr.azrotho.tenyen'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -11,16 +12,24 @@ repositories {
 
 compileJava.options.encoding = 'UTF-8'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation("net.dv8tion:JDA:5.0.0-alpha.21")
+    implementation("org.slf4j:slf4j-simple:1.7.30")
+    implementation 'net.sf.trove4j:trove4j:3.0.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.8'
 }
 
-test {
-    useJUnitPlatform()
+jar{
+    manifest{
+        attributes 'Main-Class': 'fr.azrotho.tenyen.Main'
+    }
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': "fr.azrotho.tenyen.Main"
+    }
+    archiveBaseName = "${rootProject.name}"
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
