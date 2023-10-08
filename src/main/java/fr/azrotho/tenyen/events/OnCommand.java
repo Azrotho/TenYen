@@ -1,8 +1,7 @@
 package fr.azrotho.tenyen.events;
 
-import fr.azrotho.tenyen.utils.compteur;
+import fr.azrotho.tenyen.utils.Compteur;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -20,9 +19,9 @@ public class OnCommand extends ListenerAdapter {
             }else{
             String phrase = event.getOption("phrase").getAsString();
 
-            compteur.yes = 0;
-            compteur.no = 0;
-            compteur.users.clear();
+            Compteur.yes = 0;
+            Compteur.no = 0;
+            Compteur.users.clear();
 
             event.reply("TenYenGame: " + phrase)
                     .addActionRow(
@@ -32,10 +31,10 @@ public class OnCommand extends ListenerAdapter {
             }
         }
         if(event.getName().equals("stop")) {
-            event.reply("Arrêt des votes! Résultat: Oui:" + compteur.yes + " Non:" + compteur.no).queue();
-            compteur.yes = 0;
-            compteur.no = 0;
-            compteur.users.clear();
+            event.reply("Arrêt des votes! Résultat: Oui:" + Compteur.yes + " Non:" + Compteur.no).queue();
+            Compteur.yes = 0;
+            Compteur.no = 0;
+            Compteur.users.clear();
         }
     }
 }
